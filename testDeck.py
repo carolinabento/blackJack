@@ -1,66 +1,74 @@
-import deck as d
+from deck import Deck
 
-'''
-Testing correct access to the deck structure
-'''
-def testDeck():
-	global deck
+class TestDeck:
 
-	assert d.deck == {}
-	assert d.deckOut == {}
+	def __init__(self):
+		return
 
-	d.newDeck()
+	'''
+	Testing correct access to the deck constructor
+	'''
+	@staticmethod
+	def testConstructor():
+		
 
-	assert d.deck["ace"][1] == 1
-	assert d.deck["two"][1] == 2
-	assert d.deck["king"][1] == 10
+		deck = Deck()
+
+		assert deck.deck["ace"][1] == 1
+		assert deck.deck["two"][1] == 2
+		assert deck.deck["king"][1] == 10
+		assert deck.deckOut == {}
+
+	'''
+	Testing the method emptyDeckOut
+	'''
+	@staticmethod
+	def testEmptyDeckOut():
+
+		deck = Deck()
+
+		assert deck.deck["ace"][1] == 1
+		assert deck.deck["two"][1] == 2
+		assert deck.deck["king"][1] == 10
+		assert deck.deckOut == {}
+
+		deck.deckOut["three"] = [3]
+		deck.deckOut["five"] = [5]
+
+		assert len(deck.deckOut) == 2
+		assert deck.deckOut["three"] == [3]
+		
+		deck.emptyDeckOut()
+
+		assert deck.deckOut == {}
+		assert len(deck.deckOut) == 0
+
+	'''
+	Testing method pickCard
+	'''
+	@staticmethod
+	def testPickCard():
+		
+		deck = Deck()
+
+		for index in range(0, 52):
+			assert deck.deck != {}
+			deck.pickCard()
+			assert len(deck.deckOut.keys()) >= 1
+
+		assert deck.deck == {}
+		assert len(deck.deckOut.keys()) == 13
 
 
-'''
-Testing picking a card at random.
-'''
-def testPickCard():
-	
-	for index in range(0, 52):
-		assert d.deck != {}
-		d.pickCard()
-		assert len(d.deckOut.keys()) >= 1
+	@staticmethod
+	def main():
 
-	assert d.deck == {}
-	assert len(d.deckOut.keys()) == 13
+		TestDeck.testConstructor()
+		TestDeck.testEmptyDeckOut()
+		TestDeck.testPickCard()
 
 
-'''
-Testing initializing a new game
-using the individual methods newDeck() and emptyDeckOut()
-'''
 
-def testInit():
+TestDeck.main()
 
-	d.newDeck()
 
-	assert len(d.deck.keys()) == 13
-
-	d.pickCard()
-	d.pickCard()
-
-	assert len(d.deckOut.keys()) >= 1
-
-	# a deck without 2 cards
-	oldDeck = d.deck
-
-	d.emptyDeckOut()
-
-	assert d.deckOut == {}
-
-	# a new full deck
-	d.newDeck()
-	newDeck = d.deck
-
-	assert newDeck != oldDeck
-
-	
-
-testDeck()
-testPickCard()
-testInit()
