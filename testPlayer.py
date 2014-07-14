@@ -7,12 +7,9 @@ class TestPlayer:
 	def __init__(self):
 		return
 
-
-	'''
-	Testing correct access to the player constructor
-	'''
 	@staticmethod
 	def testConstructor():
+		#Testing correct access to the player constructor
 
 		player = Player()
 
@@ -20,11 +17,9 @@ class TestPlayer:
 		assert player.hand == 0
 		assert player.chips == 100
 
-	'''
-	Testing method updateChips
-	'''
 	@staticmethod
 	def testUpdateChips():
+		#Testing method updateChips
 
 		player = Player()
 		assert player.chips == 100
@@ -34,12 +29,10 @@ class TestPlayer:
 		assert player.chips == 120
 
 
-
-	'''
-	Testing method makeMove
-	'''
 	@staticmethod
 	def testMakeMove():
+		#Testing method makeMove
+		
 		deck = Deck()
 		dealer = Dealer()
 		player = Player()
@@ -47,7 +40,7 @@ class TestPlayer:
 		assert deck.deck["ace"][1] == 1
 		assert deck.deck["two"][1] == 2
 		assert deck.deck["king"][1] == 10
-		assert deck.deckOut == {}
+		assert deck.playedCards == {}
 
 
 		assert dealer.deck == []
@@ -57,8 +50,8 @@ class TestPlayer:
 
 		dealer.dealCards(player,deck)
 
-		assert deck.deckOut != {}
-		assert len(deck.deckOut.values()) != 0
+		assert deck.playedCards != {}
+		assert len(deck.playedCards.values()) != 0
 		assert len(deck.deck.values()) != 52	
 
 		assert dealer.numberCards == 2
@@ -67,8 +60,8 @@ class TestPlayer:
 
 		player.makeMove(deck)
 
-		assert deck.deckOut != {}
-		assert len(deck.deckOut.values()) != 0
+		assert deck.playedCards != {}
+		assert len(deck.playedCards.values()) != 0
 		assert len(deck.deck.values()) != 52
 		
 		assert len(player.deck) == 3
@@ -76,6 +69,8 @@ class TestPlayer:
 
 	@staticmethod
 	def main():
+		#Run the test suite
+
 		TestPlayer.testConstructor()
 		TestPlayer.testMakeMove()
 		

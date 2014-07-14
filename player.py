@@ -14,7 +14,7 @@ class Player:
 	
 	def updateDeck(self,cardList):
 		'''
-		Method to update the player's deck
+		Update the player's deck
 		'''
 
 		for card in cardList:
@@ -23,7 +23,7 @@ class Player:
 
 	def updateChips(self,winner,bet):
 		'''
-		Method to update the player's chips count
+		Update the player's chips count
 		'''
 
 		if winner == 1:
@@ -36,17 +36,13 @@ class Player:
 
 	def makeMove(self,Deck):
 		'''
-		Simulate the player's possible moves
+		The player's possible moves
+		The player choose which value the ace (card = 1) will be, given his current hand
 		'''
 		card = Deck.pickCard();
-		
 
-		#print("card " + str(card))
+		print("\tThe card picked: " + str(card))
 
-		'''
-		The player choose which value the ace (card = 1) will be,
-		given his current hand
-		'''
 		if card == 1 and (self.hand + 11)  >= 21:
 			self.hand += 1
 		elif card == 1 and (self.hand + 11)  < 21:

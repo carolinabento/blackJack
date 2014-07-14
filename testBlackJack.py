@@ -10,6 +10,7 @@ class TestBlackJack:
 
 	@staticmethod
 	def testConstructor():
+		#Testing correct access to the blackJack constructor
 
 		bj = BlackJack()
 
@@ -20,10 +21,11 @@ class TestBlackJack:
 		assert bj.deck.deck["ace"][1] == 1
 		assert bj.deck.deck["two"][1] == 2
 		assert bj.deck.deck["king"][1] == 10
-		assert bj.deck.deckOut == {}
+		assert bj.deck.playedCards == {}
 
 	@staticmethod
 	def testPlaceBet():
+		#Testing the method placeBet
 
 		bj = BlackJack()
 		player = Player()
@@ -37,6 +39,7 @@ class TestBlackJack:
 
 	@staticmethod
 	def testRestartGame():
+		#Testing the method restartGame
 
 		bj = BlackJack()
 		player = Player()
@@ -73,8 +76,7 @@ class TestBlackJack:
 
 	@staticmethod
 	def testWinner():
-
-	#def winner(self,bet,action,deck,player,dealer):
+		#Testing the method winner
 
 		bj = BlackJack()
 		player = Player()
@@ -186,6 +188,8 @@ class TestBlackJack:
 
 	@staticmethod
 	def main():
+		#Run the test suite
+		
 		TestBlackJack.testConstructor()
 		TestBlackJack.testPlaceBet()
 		TestBlackJack.testRestartGame()

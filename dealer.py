@@ -1,3 +1,5 @@
+from player import Player
+
 class Dealer:
 
 	def __init__(self):
@@ -5,27 +7,16 @@ class Dealer:
 		self.deck = []
 		#keep the dealer's score (i.e., the total value of the cards in hand)
 		self.hand = 0
-		'''
-		keep the dealer's number of cards, in order to decide if we only show
-		the dealer's up card or the dealer's deck
-		'''
+		
+		#keep the dealer's number of cards, in order to decide if we only show the dealer's up card or the dealer's deck
 		self.numberCards = 0
 		#keep the dealer's up card
 		self.upCard = 0
 
-	
-	def __updateDeck(self,cardList):
-		'''
-		Method to update the dealer's deck
-		'''
-
-		for card in cardList:
-			self.deck.append(card)
-
 
 	def dealCards(self,Player,Deck):
 		'''
-		Method to deal the cards at the beginning of the game
+		Deals the cards, to start the game
 		For the 1st hand, gives the player and the dealer two cards
 		'''
 
@@ -33,6 +24,10 @@ class Dealer:
 		card2 = Deck.pickCard() 
 		card3 = Deck.pickCard() 
 		card4 = Deck.pickCard()
+
+		print("\tThe card picked: " + str(card1))
+		print("\tThe card picked: " + str(card3))
+		print("\tThe card picked: " + str(card4))
 
 		Player.hand = card1 + card3
 		self.hand = card2 + card4
@@ -57,10 +52,11 @@ class Dealer:
 		Player.chips = Player.chips
 
 
-	'''
-	Simulate the dealer's possible moves
-	'''
+	
 	def makeMove(self,Deck):
+		'''
+		The dealer's possible moves
+		'''
 
 		card = 0
 
@@ -68,8 +64,10 @@ class Dealer:
 			print("Dealer's hand is " + str(self.hand) + ". Dealer's deck is " + str(self.deck) + "\nDealer hits.")
 			card = Deck.pickCard()
 
+			print("\tThe card picked: " + str(card))
+
 			'''
-			The player choose which value the ace (card = 1) will be,
+			The dealer chooses which value the ace (card = 1) will be,
 			given his current hand
 			'''
 			if card == 1 and (self.hand + 11)  > 21:
@@ -102,3 +100,11 @@ class Dealer:
 			print("Dealer's hand is " + str(self.hand) + ". Dealer's deck is " + str(self.deck))
 
 		return self.hand
+	
+	def __updateDeck(self,cardList):
+		'''
+		Updates the dealer's deck
+		'''
+
+		for card in cardList:
+			self.deck.append(card)

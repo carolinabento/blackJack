@@ -6,7 +6,6 @@ class Deck:
 		'''
 		Constructor of the deck class
 		'''
-		
 
 		'''
 		Dictionary structure with the initial values for each card in the 52-card deck.
@@ -14,13 +13,6 @@ class Deck:
 		Since the player can choose the value of the ace to be 1 or 11,
 		the value of the ace is set to 1, by default.
 		'''
-		self.deck = {}
-
-		'''
-		Dictionary structure with the cards that were already played in the game
-		'''
-		self.deckOut = {}
-
 		self.deck = {"ace": [1,1,1,1],
 				"two": [2,2,2,2],
 				"three": [3,3,3,3],
@@ -35,38 +27,30 @@ class Deck:
 				"queen": [10,10,10,10],
 				"king": [10,10,10,10]}
 
+		'''
+		Dictionary structure with the cards that were already played in the game
+		'''
+		self.playedCards = {}
+
 
 		
-	def emptyDeckOut(self):
+	def emptyPlayedCards(self):
 		'''
-		Method to clear the deckOut
+		Clears the playedCards structure
 		'''
-		self.deckOut = {}
-
-
-
-	def __addToDeckOut(self,card,value):
-		'''
-		Method to add the last card that was picked, to the deckOut structure
-		'''
-		if card not in self.deckOut.keys():
-			items = []
-			items.append(value)
-			self.deckOut[card] = items
-		else:
-			self.deckOut[card].append(value)
+		self.playedCards = {}
 
 
 	def pickCard(self):
 		'''
-		Method to pick a card at random from the cards that are available.
+		Picks a card at random from the cards that are available.
 		'''
 		card = random.sample(self.deck.keys(),1)[0]
 		value = self.deck[card][0]
 
 		if len(self.deck[card]) > 0:
 			self.deck[card].remove(value)
-			self.__addToDeckOut(card,value)
+			self.__addToPlayedCards(card,value)
 
 			if len(self.deck[card]) == 0:
 				del self.deck[card]
@@ -74,6 +58,17 @@ class Deck:
 			del self.deck[card]
 			card = random.sample(self.deck.keys(),1)[0]
 			value = self.deck[card][0]
-			self.__addToDeckOut(card,value)
+			self.__addToPlayedCards(card,value)
 
 		return value
+
+	def __addToPlayedCards(self,card,value):
+		'''
+		Adds the last card that was picked, to the playedCards structure
+		'''
+		if card not in self.playedCards.keys():
+			items = []
+			items.append(value)
+			self.playedCards[card] = items
+		else:
+			self.playedCards[card].append(value)

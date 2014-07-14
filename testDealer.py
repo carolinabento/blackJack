@@ -7,11 +7,9 @@ class TestDealer:
 	def __init__(self):
 		return
 
-	'''
-	Testing correct access to the dealer constructor
-	'''
 	@staticmethod
 	def testConstructor():
+		#Testing correct access to the dealer constructor
 
 		dealer = Dealer()
 
@@ -21,11 +19,10 @@ class TestDealer:
 		assert dealer.upCard == 0
 
 
-	'''
-	Testing method dealCards
-	'''
 	@staticmethod
 	def testDealCards():
+		#Testing method dealCards
+
 		deck = Deck()
 		dealer = Dealer()
 		player = Player()
@@ -33,7 +30,7 @@ class TestDealer:
 		assert deck.deck["ace"][1] == 1
 		assert deck.deck["two"][1] == 2
 		assert deck.deck["king"][1] == 10
-		assert deck.deckOut == {}
+		assert deck.playedCards == {}
 
 
 		assert dealer.deck == []
@@ -48,8 +45,8 @@ class TestDealer:
 
 		dealer.dealCards(player,deck)
 
-		assert deck.deckOut != {}
-		assert len(deck.deckOut.values()) != 0
+		assert deck.playedCards != {}
+		assert len(deck.playedCards.values()) != 0
 		assert len(deck.deck.values()) != 52	
 
 		assert dealer.numberCards == 2
@@ -59,11 +56,11 @@ class TestDealer:
 		assert dealer.hand != 0
 		assert len(player.deck) == 2
 
-	'''
-	Testing method makeMove
-	'''
+
 	@staticmethod
 	def testMakeMove():
+		#Testing method makeMove
+
 		deck = Deck()
 		dealer = Dealer()
 		player = Player()
@@ -71,7 +68,7 @@ class TestDealer:
 		assert deck.deck["ace"][1] == 1
 		assert deck.deck["two"][1] == 2
 		assert deck.deck["king"][1] == 10
-		assert deck.deckOut == {}
+		assert deck.playedCards == {}
 
 
 		assert dealer.deck == []
@@ -81,8 +78,8 @@ class TestDealer:
 
 		dealer.dealCards(player,deck)
 
-		assert deck.deckOut != {}
-		assert len(deck.deckOut.values()) != 0
+		assert deck.playedCards != {}
+		assert len(deck.playedCards.values()) != 0
 		assert len(deck.deck.values()) != 52	
 
 		assert dealer.numberCards == 2
@@ -91,8 +88,8 @@ class TestDealer:
 
 		dealer.makeMove(deck)
 
-		assert deck.deckOut != {}
-		assert len(deck.deckOut.values()) != 0
+		assert deck.playedCards != {}
+		assert len(deck.playedCards.values()) != 0
 		assert len(deck.deck.values()) != 52
 
 		assert dealer.numberCards >= 2
@@ -104,6 +101,8 @@ class TestDealer:
 
 	@staticmethod
 	def main():
+		#Run the test suite
+		
 		TestDealer.testConstructor()
 		TestDealer.testDealCards()
 		TestDealer.testMakeMove()
