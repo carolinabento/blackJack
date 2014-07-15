@@ -15,6 +15,8 @@ class GreedyPlayer(Player):
 		The greedy player's possible moves
 		'''
 		while self.hand <= self.threshold:
-			print("Player: Hits.")
+			print("Player hits.")
 			self.makeMove(Deck)
 			print("Player: Your deck is " + str(self.deck) + ". Your current hand is " +  str(self.hand) + ".")
+
+		return self.hand

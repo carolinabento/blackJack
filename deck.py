@@ -45,7 +45,7 @@ class Deck:
 		'''
 		Picks a card at random from the cards that are available.
 		'''
-		card = random.sample(self.deck.keys(),1)[0]
+		card = random.choice(self.deck.keys())
 		value = self.deck[card][0]
 
 		if len(self.deck[card]) > 0:
@@ -56,7 +56,7 @@ class Deck:
 				del self.deck[card]
 		else:
 			del self.deck[card]
-			card = random.sample(self.deck.keys(),1)[0]
+			card = random.choice(self.deck.keys())
 			value = self.deck[card][0]
 			self.__addToPlayedCards(card,value)
 

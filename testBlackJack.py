@@ -12,7 +12,8 @@ class TestBlackJack:
 	def testConstructor():
 		#Testing correct access to the blackJack constructor
 
-		bj = BlackJack()
+		player = Player()
+		bj = BlackJack(player)
 
 		assert bj.moves == 0
 		assert bj.bet == 0
@@ -23,64 +24,14 @@ class TestBlackJack:
 		assert bj.deck.deck["king"][1] == 10
 		assert bj.deck.playedCards == {}
 
-	@staticmethod
-	def testPlaceBet():
-		#Testing the method placeBet
-
-		bj = BlackJack()
-		player = Player()
-
-		assert bj.moves == 0
-		assert bj.bet == 0
-		assert bj.action == ""
-
-		bj.placeBet(player)
-
-
-	@staticmethod
-	def testRestartGame():
-		#Testing the method restartGame
-
-		bj = BlackJack()
-		player = Player()
-
-		#players initial hand is blackjack
-		bj.bet = 10
-		bj.moves = 1
-		action = ""
-	
-		bj.dealer.deck = [2,5]
-		bj.dealer.hand = 7
-		bj.dealer.upCard = 5
-
-		player.hand = 21
-		player.deck = [11,10]
-
-		assert bj.bet == 10	
-		assert bj.moves == 1		
-		assert bj.winner(bj.bet,action,bj.deck,player,bj.dealer) == 2
-		assert player.chips == 115
-
-		bj.restartGame(player)
-
-		assert bj.moves == 0
-		assert bj.bet == 0
-		assert bj.action == ""
-		assert player.chips == 115
-
-		assert player.hand == 0		
-		assert player.deck == []
-
-		assert bj.dealer.deck == []
-		assert bj.dealer.hand == 0
 
 	@staticmethod
 	def testWinner():
 		#Testing the method winner
 
-		bj = BlackJack()
 		player = Player()
-
+		bj = BlackJack(player)
+		
 		#players initial hand is blackjack
 		bj.bet = 10
 		bj.moves = 1
@@ -184,6 +135,23 @@ class TestBlackJack:
 		assert bj.winner(bj.bet,action,bj.deck,player,bj.dealer) == 3
 		assert player.chips == 135
 
+		#players wins because is hand is higher than the dealer's
+		bj.bet = 10
+		bj.moves = 3
+		action = "s"
+	
+		bj.dealer.deck = [2,7,8]
+		bj.dealer.hand = 17
+		bj.dealer.upCard = 7
+
+		player.deck = [7,7,7]
+		player.hand = 21
+
+		assert bj.bet == 10	
+		assert bj.moves == 3		
+		assert bj.winner(bj.bet,action,bj.deck,player,bj.dealer) == 1
+		assert player.chips == 155
+
 
 
 	@staticmethod
@@ -191,9 +159,10 @@ class TestBlackJack:
 		#Run the test suite
 		
 		TestBlackJack.testConstructor()
-		TestBlackJack.testPlaceBet()
-		TestBlackJack.testRestartGame()
 		TestBlackJack.testWinner()
+
+
+
 
 
 TestBlackJack.main()

@@ -8,20 +8,20 @@ def textBlackJack():
 	'''
 
 	print("---------------------------------------------------")
-	print("*** BlackJack ***\n\nTo Hit type \"h\", to stand type \"s\", to Quit type \"q\" \n")
+	print("*** BlackJack ***\nTo Hit type \"h\", to stand type \"s\", to Quit type \"q\" \n")
 	print("---------------------------------------------------\n")
 
-	blackJack = BlackJack()
 	player = Player()
+	blackJack = BlackJack(player)
 
-	while player.chips > 0:
+	while player.chips > 0.0:
 
 		if blackJack.dealer.numberCards == 0:
-			blackJack.bet = blackJack.placeBet(player,0,blackJack.moves)
+			blackJack.bet = blackJack.placeBet(player,1,blackJack.moves)
 			blackJack.dealer.dealCards(player,blackJack.deck)
 			blackJack.moves += 1
 
-		print("\t [][][] bet " + str(blackJack.bet))
+		#print("\t [][][] bet " + str(blackJack.bet))
 
 		
 		blackJack.action = raw_input("Player: Your deck is " + str(player.deck) + ". Your current hand is " +  str(player.hand) + ". What is your move?\n")
@@ -33,32 +33,33 @@ def textBlackJack():
 
 			result = blackJack.winner(blackJack.bet,blackJack.action,blackJack.deck,player,blackJack.dealer)
 
-			if result == 1 or result == 2 or result == 3:
+			if result > 0:
 
-				#cont = raw_input("Player: Try Again?\n")
+				cont = raw_input("Player: Try Again?\n")
 
-				#if cont == "y" :
-					blackJack.restartGame(player)
+				if cont == "y" :
+					blackJack = BlackJack(player)
 					continue
-				#else:
-				#	print("Player: You left the game with " + str(player.chips) + " chips.")
-				#	return;
+				else:
+					print("Player: You left the game with " + str(player.chips) + " chips.")
+					return;
+					
 		elif blackJack.action == "s" or blackJack.action.lower() == "stand":
 
 			blackJack.dealer.makeMove(blackJack.deck)
 
 			result = blackJack.winner(blackJack.bet,blackJack.action,blackJack.deck,player,blackJack.dealer)
 
-			if result == 1 or result == 2 or result == 3:
+			if result > 0:
 
-				#cont = raw_input("Player: Try Again?\n")
+				cont = raw_input("Player: Try Again?\n")
 
-				#if cont == "y":
-					blackJack.restartGame(player)
-				#	continue
-				#else:
-				#print("Player: You left the game with " + str(player.chips) + " chips.")			
-				#	return;
+				if cont == "y":
+					blackJack = BlackJack(player)
+					continue
+				else:
+					print("Player: You left the game with " + str(player.chips) + " chips.")			
+					return;
 
 		elif blackJack.action == "q" or blackJack.action.lower() == "quit" :
 			print("Player: You left the game with " + str(player.chips) + " chips.")
@@ -66,7 +67,7 @@ def textBlackJack():
 		else:
 			print("This is an invalid play!\nTo Hit type \"h\", to stand type \"s\", to Quit type \"q\" \n")
 
-	if player.chips == 0:
+	if player.chips == 0.0:
 		print("Game Over!")
 
 
@@ -75,56 +76,44 @@ def playGreedyBlackJack():
 	An automatic BlackJack game with with a greedy player
 	'''
 
-	print("---------------------------------------------------")
-	print("*** BlackJack ***")
-	print("---------------------------------------------------\n")
+	greedyPlayer = GreedyPlayer()
+	blackJack = BlackJack(greedyPlayer)
 
-	blackJack = BlackJack()
-	player = GreedyPlayer()
+	print("Player: You have " + str(greedyPlayer.chips) + " chips.")
 
-	print("Player: You have " + str(player.chips) + " chips.")
-
-	while player.chips > 0:
+	while greedyPlayer.chips > 0.0:
 		blackJack.moves += 1
 
 		if blackJack.dealer.numberCards == 0:
-			blackJack.bet = blackJack.placeBet(player,1,blackJack.moves)
-			blackJack.dealer.dealCards(player,blackJack.deck)
+			blackJack.bet = blackJack.placeBet(greedyPlayer,2,blackJack.moves)
+			blackJack.dealer.dealCards(greedyPlayer,blackJack.deck)
+			print("Player: Your deck is " + str(greedyPlayer.deck) + ". Your current hand is " +  str(greedyPlayer.hand) + ".")
 			
 
 		print("Player: Your bet was " + str(blackJack.bet) + " chips.")
 
-		
-		print("Player: Your deck is " + str(player.deck) + ". Your current hand is " +  str(player.hand) + ".")
-
-		
 		'''
 		Player makes his greedy moves until his hand is >= 15
 		and then is up to the dealer to make his moves
-		'''
-		player.hand = player.makeGreedyMove(blackJack.deck)
+		'''		
+		greedyPlayer.hand = greedyPlayer.makeGreedyMove(blackJack.deck)
+		blackJack.moves += 1
+		
+		if greedyPlayer.hand < 21:
 
-		if player.hand < 21:
-
-			print("Player: Stands.")
+			print("Player stands.")
 			blackJack.dealer.makeMove(blackJack.deck)
 			
 			blackJack.action = "s"
 
-		result = blackJack.winner(blackJack.bet,blackJack.action,blackJack.deck,player,blackJack.dealer)
+		result = blackJack.winner(blackJack.bet,blackJack.action,blackJack.deck,greedyPlayer,blackJack.dealer)
 
-		if result == 1 or result == 2 or result == 3:
+		blackJack = BlackJack(greedyPlayer)
+		print("\n\nPlayer: You have " + str(greedyPlayer.chips) + " chips.")
 
-			cont = raw_input("Player: Try Again?\n")
 
-			if cont == "y":
-				print("\n\n")
-				blackJack.restartGame(player)
-				continue
-			else:
-				print("Player: You left the game with " + str(player.chips) + " chips.")
-				return;
-
+	if greedyPlayer.chips == 0.0:
+		print("Game Over!")
 
 def selectGameMode():
 	'''
@@ -157,7 +146,7 @@ def main():
 	'''
 
 	print("---------------------------------------------------")
-	print("*** BlackJack ***\n")
+	print("*** BlackJack ***")
 	print("---------------------------------------------------\n")
 
 

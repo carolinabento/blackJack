@@ -46,7 +46,7 @@ class Dealer:
 
 		self.__updateDeck(dealerCards)
 
-		print("Player: The dealer's up card is " + str(self.upCard))
+		print("Player: The dealer's up card is " + str(self.upCard) + ".")
 
 		self.numberCards = 2
 		Player.chips = Player.chips
@@ -70,14 +70,14 @@ class Dealer:
 			The dealer chooses which value the ace (card = 1) will be,
 			given his current hand
 			'''
-			if card == 1 and (self.hand + 11)  > 21:
-				self.hand += card
+			if card == 1 and (self.hand + 11)  >= 21:
+				self.hand += 1
 			elif card == 1 and (self.hand + 11) < 21:
+				self.hand += 11
 				card = 11
-				self.hand += card
 			elif (self.hand + card) > 21 and 11 in self.deck:
-				self.hand.remove(11)
-				self.hand.append(1)
+				self.deck.remove(11)
+				self.deck.append(1)
 				self.hand += card
 			else:
 				self.hand += card
@@ -87,8 +87,8 @@ class Dealer:
 
 			self.__updateDeck(dealerCards)
 		
-		if self.hand > 21:
-			return
+		#if self.hand > 21:
+		#	return
 
 		self.numberCards += self.numberCards
 
