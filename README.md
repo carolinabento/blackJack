@@ -1,4 +1,4 @@
-blackJack
+BlackJack Card Game
 =========
 
 This repository contains the code for the classic BlackJack card game.
