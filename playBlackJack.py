@@ -1,6 +1,7 @@
 from blackJack import BlackJack
 from player import Player
 from greedyPlayer import GreedyPlayer
+from cautiousPlayer import CautiousPlayer
 
 def textBlackJack():
 	'''
@@ -71,7 +72,7 @@ def textBlackJack():
 		print("Game Over!")
 
 
-def playGreedyBlackJack():
+def greedyBlackJack():
 	'''
 	An automatic BlackJack game with with a greedy player
 	'''
@@ -115,6 +116,59 @@ def playGreedyBlackJack():
 	if greedyPlayer.chips == 0.0:
 		print("Game Over!")
 
+
+
+
+def cautiousBlackJack():
+	'''
+	An automatic BlackJack game with with a cautious player
+	'''
+
+	cautiousPlayer = CautiousPlayer()
+	blackJack = BlackJack(cautiousPlayer)
+
+	print("Player: You have " + str(cautiousPlayer.chips) + " chips.")
+
+	while cautiousPlayer.chips > 0.0:
+		blackJack.moves += 1
+
+		if blackJack.dealer.numberCards == 0:
+			blackJack.bet = blackJack.placeBet(cautiousPlayer,2,blackJack.moves)
+			blackJack.dealer.dealCards(cautiousPlayer,blackJack.deck)
+			print("Player: Your deck is " + str(cautiousPlayer.deck) + ". Your current hand is " +  str(cautiousPlayer.hand) + ".")
+			
+
+		print("Player: Your bet was " + str(blackJack.bet) + " chips.")
+
+		'''
+		Player makes his cautious moves until his probability of picking 
+		a card is less than 0.6
+		'''		
+		cautiousPlayer.hand = cautiousPlayer.makeCautiousMove(blackJack.deck)
+		blackJack.moves += 1
+		
+		if cautiousPlayer.hand < 21:
+
+			print("Player stands.")
+			blackJack.dealer.makeMove(blackJack.deck)
+			
+			blackJack.action = "s"
+
+		result = blackJack.winner(blackJack.bet,blackJack.action,blackJack.deck,cautiousPlayer,blackJack.dealer)
+
+		blackJack = BlackJack(cautiousPlayer)
+		print("\n\nPlayer: You have " + str(cautiousPlayer.chips) + " chips.")
+
+
+	if cautiousPlayer.chips == 0.0:
+		print("Game Over!")
+
+
+
+
+
+
+
 def selectGameMode():
 	'''
 	Selects the BlackJack game that is going to be played
@@ -133,9 +187,9 @@ def selectGameMode():
 		if int(mode) == 1:
 			textBlackJack()
 		elif int(mode) == 2:
-			playGreedyBlackJack()
+			greedyBlackJack()
 		elif int(mode) == 3:
-			playCautiousBlackJack()
+			cautiousBlackJack()
 		else:
 			print("This is an invalid choice!")
 			selectGameMode()

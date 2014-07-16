@@ -114,7 +114,7 @@ class BlackJack:
 				print("Dealer busts: Player Wins!")
 				return 1
 		elif player.hand == 21:
-				self.action = "s"
-				winner(self,bet,action,deck,player,dealer)
+				action = "s"
+				return self.winner(bet,action,deck,player,dealer)
 		else:
 			return 0

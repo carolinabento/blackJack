@@ -53,6 +53,18 @@ class TestDeck:
 		assert deck.deck == {}
 		assert len(deck.playedCards.keys()) == 13
 
+	@staticmethod
+	def testNumbCardsLeft():
+		#Testing method numbCardsLeft
+		
+		deck = Deck()
+
+		assert deck.numbCardsLeft() == 52
+
+		del deck.deck["two"]
+
+		assert deck.numbCardsLeft() == 48
+
 
 	@staticmethod
 	def main():
@@ -61,6 +73,7 @@ class TestDeck:
 		TestDeck.testConstructor()
 		TestDeck.testEmptyPlayedCards()
 		TestDeck.testPickCard()
+		TestDeck.testNumbCardsLeft()
 
 
 

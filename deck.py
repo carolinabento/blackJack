@@ -62,6 +62,21 @@ class Deck:
 
 		return value
 
+
+	def numbCardsLeft(self):
+		'''
+		Returns the total number of cards that are left in the deck for the player/dealer
+		to pick
+		'''
+		total = 0
+
+		for key in self.deck.keys():
+			total += len(self.deck[key])
+
+		return total
+
+
+
 	def __addToPlayedCards(self,card,value):
 		'''
 		Adds the last card that was picked, to the playedCards structure
