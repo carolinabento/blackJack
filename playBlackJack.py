@@ -8,9 +8,9 @@ def textBlackJack():
 	A BlackJack game with user input
 	'''
 
-	print("---------------------------------------------------")
-	print("*** BlackJack ***\nTo Hit type \"h\", to stand type \"s\", to Quit type \"q\" \n")
-	print("---------------------------------------------------\n")
+	print("\n-----------------------------------------------------------------------------")
+	print("To Hit type \"h\", to stand type \"s\", to double down type \"d\", to Quit type \"q\"")
+	print("-----------------------------------------------------------------------------\n")
 
 	player = Player()
 	blackJack = BlackJack(player)
@@ -19,12 +19,14 @@ def textBlackJack():
 
 		if blackJack.dealer.numberCards == 0:
 			blackJack.bet = blackJack.placeBet(player,1,blackJack.moves)
-			blackJack.dealer.dealCards(player,blackJack.deck)
-			blackJack.moves += 1
+			
+			if blackJack.bet == 0:
+				print("Player: You left the game with " + str(player.chips) + " chips.")			
+				return
+			else:
+				blackJack.dealer.dealCards(player,blackJack.deck)
+				blackJack.moves += 1
 
-		#print("\t [][][] bet " + str(blackJack.bet))
-
-		
 		blackJack.action = raw_input("Player: Your deck is " + str(player.deck) + ". Your current hand is " +  str(player.hand) + ". What is your move?\n")
 
 		if blackJack.action == "h" or blackJack.action.lower() == "hit":
@@ -32,39 +34,35 @@ def textBlackJack():
 
 			player.hand = player.makeMove(blackJack.deck)
 
-			result = blackJack.winner(blackJack.bet,blackJack.action,blackJack.deck,player,blackJack.dealer)
-
-			if result > 0:
-
-				cont = raw_input("Player: Try Again?\n")
-
-				if cont == "y" :
-					blackJack = BlackJack(player)
-					continue
-				else:
-					print("Player: You left the game with " + str(player.chips) + " chips.")
-					return;
-					
+			blackJack.checkWinner(blackJack.bet,blackJack.action,blackJack.deck,player,blackJack.dealer)
+			
 		elif blackJack.action == "s" or blackJack.action.lower() == "stand":
 
 			blackJack.dealer.makeMove(blackJack.deck)
 
-			result = blackJack.winner(blackJack.bet,blackJack.action,blackJack.deck,player,blackJack.dealer)
+			blackJack.checkWinner(blackJack.bet,blackJack.action,blackJack.deck,player,blackJack.dealer)
+			
+		elif blackJack.action == "d" or blackJack.action.lower() == "double down" or blackJack.action.lower() == "doubledown":
+			if  blackJack.moves == 1:
+				firstBet = blackJack.bet
 
-			if result > 0:
+				blackJack.bet = blackJack.placeBet(player,3,blackJack.moves)
 
-				cont = raw_input("Player: Try Again?\n")
+				if blackJack.bet == firstBet*2:
 
-				if cont == "y":
-					blackJack = BlackJack(player)
-					continue
-				else:
-					print("Player: You left the game with " + str(player.chips) + " chips.")			
-					return;
+					player.hand = player.makeMove(blackJack.deck)
+					blackJack.action = "s"
 
-		elif blackJack.action == "q" or blackJack.action.lower() == "quit" :
+					blackJack.checkWinner(blackJack.bet,blackJack.action,blackJack.deck,player,blackJack.dealer)		
+			else:
+				print("Player: You can only double down in your first move!")	
+
+
+		if blackJack.action.lower() in blackJack.exitMoves:
 			print("Player: You left the game with " + str(player.chips) + " chips.")
-			return;
+			return
+		elif blackJack.action.lower() in blackJack.possibleMoves:
+			continue
 		else:
 			print("This is an invalid play!\nTo Hit type \"h\", to stand type \"s\", to Quit type \"q\" \n")
 
@@ -107,8 +105,8 @@ def greedyBlackJack():
 			
 			blackJack.action = "s"
 
-		result = blackJack.winner(blackJack.bet,blackJack.action,blackJack.deck,greedyPlayer,blackJack.dealer)
-
+		blackJack.winner(blackJack.bet,blackJack.action,blackJack.deck,greedyPlayer,blackJack.dealer)
+		
 		blackJack = BlackJack(greedyPlayer)
 		print("\n\nPlayer: You have " + str(greedyPlayer.chips) + " chips.")
 

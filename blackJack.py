@@ -19,8 +19,13 @@ class BlackJack:
 		#keep the bet the player made for the game
 		self.bet = 0
 
-		
-		#keep the move the player chose: h - hit, s - stand
+		#keep the possible user moves 
+		self.possibleMoves = ["h","hit","s","stand","d","doubledown","double down"]
+
+		#keep the keywords that indicate that the user wants to quit
+		self.exitMoves = ["q","quit","n","no","exit"]
+
+		#keep the move the player chose: h - hit, s - stand, d - doubleDown
 		self.action = ""
 
 		self.deck = Deck()
@@ -36,7 +41,7 @@ class BlackJack:
 		'''
 		Place the player's bet
 		Input 	player - the player object
-				mode - the game mode (1: input mode, 2: bot mode with the greedy player, 3: bot mode with the cautious player)
+				mode - the game mode (1: input mode, 2: bot mode (with the greedy/cautious player), 3: double down)
 				moves - the number of moves of the game
 		Output - the bet the player has made
 		'''
@@ -44,24 +49,49 @@ class BlackJack:
 		if int(mode) == 1:
 			self.bet = raw_input("Player: You have " + str(player.chips) + " chips. What is your bet?\n")
 
-			while self.bet.isalpha() or int(self.bet) <= int(0):
-				print("Your bet was invalid!")
-				self.bet = raw_input("Player: Your bet has to bet at least 1 chip!\n")
-			
-			if self.bet < 1:
-				self.bet = int(raw_input("Player: Your bet has to bet at least 1 chip!\n"))
+			if self.bet.isalpha() and self.bet in self.exitMoves:
+				self.bet = 0.0
+			else:
+				while self.bet.isalpha() or int(self.bet) <= int(0):
+					print("Your bet was invalid!")
+					self.bet = raw_input("Player: Your bet has to bet at least 1 chip!\n")
+				
+				if self.bet < 1:
+					self.bet = int(raw_input("Player: Your bet has to bet at least 1 chip!\n"))
 		elif int(mode) == 2:
 			if moves == 1 and round(float(player.chips)/2.0,0) >= 1:
 				self.bet = round(float(player.chips)/2.0,0)
 			else:
 				self.bet = player.chips
+		elif int(mode) == 3:
+			if player.chips >= self.bet*2:
+				self.bet = self.bet*2
+			else:
+				print("Player: You don't have enough chips for this bet!")
+
 		elif player.chips <= 0.0:
 			print("Player: You have no more chips to bet!")
 			self.bet = 0.0
 
+
+
+
 		return int(self.bet)
 
-	
+	def checkWinner(self,bet,action,deck,player,dealer):
+		result = self.winner(self.bet,self.action,self.deck,player,self.dealer)
+
+		if result > 0:
+
+			cont = raw_input("Player: Try Again?\n")
+			self.__init__(player)
+
+			if cont == "y" :
+				self.action = "h"
+			else:
+				self.action = "q"
+
+
 	def winner(self,bet,action,deck,player,dealer):
 		'''
 		Check if the player meets all the conditions to win the game
