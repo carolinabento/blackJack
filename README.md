@@ -19,4 +19,7 @@ This bot can be two different players:
 
 Here is the UML class diagram for the BlackJack card game:
 
+![][id]
+
+
 [id]: https://github.com/carolinabento/blackJack/blob/master/imgs/blackJackUML.png  "Optional title attribute"
