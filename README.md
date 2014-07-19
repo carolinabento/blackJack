@@ -6,12 +6,20 @@ This repository contains the code for the classic BlackJack card game.
 Table Of Contents
 -----------------
 
-* [Text-based BlackJack](Text-based BlackJack)
-* [Project Architecture](Project Architecture)
-* [Play BlackJack](Play BlackJack)
+* [Play BlackJack](#play)
+* [Documentation](#docs)
+* [Project Architecture](#architecture)
 
 
-###[Text-based BlackJack](Text-based BlackJack)
+
+### <a name="play"></a>Play BlackJack
+
+To play this text-based BlackJack download the project's source code, open a terminal shell in project root directory and type:
+
+<code>./blackJack/playBlackJach.py</code>
+
+
+### <a name="docs"></a>Documentation
 
 This BlackJack game contains a limited set of moves/actions:
 * place a bet
@@ -27,7 +35,7 @@ This bot can be two different players:
 * **Cautious Player** - only hits if the probability of picking a card that will not make him bust (and lose the game) is greater or equal to 0.6, i.e., he has 60% of chance of not busting
 
 
-###[Project Architecture](Project Architecture)
+### <a name="architecture"></a>Project Architecture
 
 Here is the UML class diagram for the BlackJack card game:
 
@@ -36,9 +44,3 @@ Here is the UML class diagram for the BlackJack card game:
 
 [id]: https://github.com/carolinabento/blackJack/blob/master/imgs/blackJackUML.png  "Optional title attribute"
 
-
-###[Play BlackJack](Play BlackJack)
-
-To play this text-based BlackJack download the project's source code, open a terminal shell in project root directory and type:
-
-<code>./blackJack/playBlackJach.py</code>
