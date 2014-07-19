@@ -1,7 +1,7 @@
-from deck import Deck
-from dealer import Dealer
-from player import Player
-from blackJack import BlackJack
+from blackJack.deck import Deck
+from blackJack.dealer import Dealer
+from blackJack.player import Player
+from blackJack.blackJack import BlackJack
 
 class TestBlackJack:
 

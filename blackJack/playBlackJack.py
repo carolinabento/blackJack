@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from blackJack import BlackJack
 from player import Player
 from greedyPlayer import GreedyPlayer

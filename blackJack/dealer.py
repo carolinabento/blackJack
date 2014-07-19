@@ -1,4 +1,5 @@
 from player import Player
+from deck import Deck
 
 class Dealer:
 

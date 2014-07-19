@@ -1,8 +1,8 @@
-#!/usr/bin/env python
-
 from deck import Deck
 from dealer import Dealer
 from player import Player
+
+
 
 '''
 The BlackJack class represents the BlackJack table: it has a dealer,and a deck
