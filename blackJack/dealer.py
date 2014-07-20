@@ -64,38 +64,28 @@ class Dealer:
 
 
 	
-	def makeMove(self,deck):
+	def makeMove(self,deck,playerHand):
 		"""
 		The dealer's possible moves
 
-		The dealer chooses which value the ace (card = 1) will be, 
-		given his current hand
-
 		:param deck: Deck class
 		:type deck: :class:'blackjack.deck' class instance
+
+		:param playerHand: Player's current hand
+		:type playerHand: int
 
 		:rtype: int
 		"""
 
 		card = 0
 
-		while self.hand < 17:
+		while self.hand < 17 or (self.hand >= 17 and playerHand > self.hand):
 			print("Dealer's hand is " + str(self.hand) + ". Dealer's deck is " + str(self.deck) + "\nDealer hits.")
 			card = deck.pickCard()
 
 			print("\tThe card picked: " + str(card))
 
-			if card == 1 and (self.hand + 11)  >= 21:
-				self.hand += 1
-			elif card == 1 and (self.hand + 11) < 21:
-				self.hand += 11
-				card = 11
-			elif (self.hand + card) > 21 and 11 in self.deck:
-				self.deck.remove(11)
-				self.deck.append(1)
-				self.hand += card
-			else:
-				self.hand += card
+			self.__chooseCardValue(card)
 
 			dealerCards = []
 			dealerCards.append(card)
@@ -113,7 +103,8 @@ class Dealer:
 			print("Dealer's hand is " + str(self.hand) + ". Dealer's deck is " + str(self.deck))
 
 		return self.hand
-	
+
+
 	def __updateDeck(self,cardList):
 		"""
 		Updates the dealer's deck
@@ -124,3 +115,26 @@ class Dealer:
 
 		for card in cardList:
 			self.deck.append(card)
+
+
+	def __chooseCardValue(self,card):
+		"""
+		Chooses the value of the picked card, according to the dealer's
+		current hand. If he picks an ace (card = 1), he can choose its value
+		to be either 1 or 11.
+
+		:param card: Value of the picked card
+		:type card: int
+		"""	
+
+		if card == 1 and (self.hand + 11)  >= 21:
+			self.hand += 1
+		elif card == 1 and (self.hand + 11) < 21:
+			self.hand += 11
+			card = 11
+		elif (self.hand + card) > 21 and 11 in self.deck:
+			self.deck.remove(11)
+			self.deck.append(1)
+			self.hand += card
+		else:
+			self.hand += card

@@ -100,7 +100,7 @@ class BlackJack:
 			cont = raw_input("Player: Try Again?\n")
 			self.__init__(self.player)
 
-			if cont == "y" :
+			if cont.lower() == "y" or cont.lower() == "yes" :
 				self.action = "h"
 			else:
 				self.action = "q"

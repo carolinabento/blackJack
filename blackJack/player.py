@@ -68,9 +68,29 @@ class Player:
 
 		print("\tThe card picked: " + str(card))
 
+		self.__chooseCardValue(card)
+
+		playerCards = []
+		playerCards.append(card)
+		
+		self.updateDeck(playerCards)
+
+		return self.hand
+
+
+	def __chooseCardValue(self,card):
+		"""
+		Chooses the value of the picked card, according to the player's
+		current hand. If he picks an ace (card = 1), he can choose its value
+		to be either 1 or 11.
+
+		:param card: Value of the picked card
+		:type card: int
+		"""	
+
 		if card == 1 and (self.hand + 11)  >= 21:
 			self.hand += 1
-		elif card == 1 and (self.hand + 11)  < 21:
+		elif card == 1 and (self.hand + 11) < 21:
 			self.hand += 11
 			card = 11
 		elif (self.hand + card) > 21 and 11 in self.deck:
@@ -79,10 +99,3 @@ class Player:
 			self.hand += card
 		else:
 			self.hand += card
-
-		playerCards = []
-		playerCards.append(card)
-		
-		self.updateDeck(playerCards)
-
-		return self.hand
