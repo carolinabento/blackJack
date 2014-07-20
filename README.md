@@ -14,7 +14,7 @@ Table Of Contents
 
 ### <a name="play"></a>Play BlackJack
 
-To play this text-based BlackJack download the project's source code, open a terminal shell in project root directory and type:
+To play this text-based BlackJack download the project's source code, open your terminal in project root directory and type:
 
 <code>./blackJack/playBlackJach.py</code>
 
