@@ -2,6 +2,10 @@ from player import Player
 from deck import Deck
 
 class Dealer:
+	"""
+	The Dealer class represents the house dealer
+	"""
+
 
 	def __init__(self):
 		#keep the dealer's deck
@@ -15,22 +19,28 @@ class Dealer:
 		self.upCard = 0
 
 
-	def dealCards(self,Player,Deck):
-		'''
+	def dealCards(self,player,deck):
+		"""
 		Deals the cards, to start the game
 		For the 1st hand, gives the player and the dealer two cards
-		'''
 
-		card1 = Deck.pickCard() 
-		card2 = Deck.pickCard() 
-		card3 = Deck.pickCard() 
-		card4 = Deck.pickCard()
+		:param player: Player class
+		:type player: :class:'blackjack.player' class instance
+		:param deck: Deck class
+		:type deck: :class:'blackjack.deck' class instance
+
+		"""
+
+		card1 = deck.pickCard() 
+		card2 = deck.pickCard() 
+		card3 = deck.pickCard() 
+		card4 = deck.pickCard()
 
 		print("\tThe card picked: " + str(card1))
 		print("\tThe card picked: " + str(card3))
 		print("\tThe card picked: " + str(card4))
 
-		Player.hand = card1 + card3
+		player.hand = card1 + card3
 		self.hand = card2 + card4
 
 		self.upCard = card4
@@ -38,7 +48,7 @@ class Dealer:
 		playerCards = []
 		playerCards.append(card1)
 		playerCards.append(card3)
-		Player.updateDeck(playerCards)
+		player.updateDeck(playerCards)
 
 
 		dealerCards = []
@@ -50,27 +60,31 @@ class Dealer:
 		print("Player: The dealer's up card is " + str(self.upCard) + ".")
 
 		self.numberCards = 2
-		Player.chips = Player.chips
+		player.chips = player.chips
 
 
 	
-	def makeMove(self,Deck):
-		'''
+	def makeMove(self,deck):
+		"""
 		The dealer's possible moves
-		'''
+
+		The dealer chooses which value the ace (card = 1) will be, 
+		given his current hand
+
+		:param deck: Deck class
+		:type deck: :class:'blackjack.deck' class instance
+
+		:rtype: int
+		"""
 
 		card = 0
 
 		while self.hand < 17:
 			print("Dealer's hand is " + str(self.hand) + ". Dealer's deck is " + str(self.deck) + "\nDealer hits.")
-			card = Deck.pickCard()
+			card = deck.pickCard()
 
 			print("\tThe card picked: " + str(card))
 
-			'''
-			The dealer chooses which value the ace (card = 1) will be,
-			given his current hand
-			'''
 			if card == 1 and (self.hand + 11)  >= 21:
 				self.hand += 1
 			elif card == 1 and (self.hand + 11) < 21:
@@ -88,8 +102,6 @@ class Dealer:
 
 			self.__updateDeck(dealerCards)
 		
-		#if self.hand > 21:
-		#	return
 
 		self.numberCards += self.numberCards
 
@@ -103,9 +115,12 @@ class Dealer:
 		return self.hand
 	
 	def __updateDeck(self,cardList):
-		'''
+		"""
 		Updates the dealer's deck
-		'''
+
+		:param cardList: List of cards to add to the dealer's deck
+		:type cardList: list
+		"""
 
 		for card in cardList:
 			self.deck.append(card)

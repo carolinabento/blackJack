@@ -1,18 +1,23 @@
 import random
 
 class Deck:
-	
+	"""
+	The Deck class represents the house's deck, from which all cards are pick from, at
+	random
+	"""
+
 	def __init__(self):
-		'''
-		Constructor of the deck class
-		'''
-
-		'''
-		Dictionary structure with the initial values for each card in the 52-card deck.
-
-		Since the player can choose the value of the ace to be 1 or 11,
-		the value of the ace is set to 1, by default.
-		'''
+		"""
+		Constructor of the Deck class
+		
+		The instance variable 'deck' is a dictionary structure with the initial values for each card
+		in the 52-card deck. Since the player can choose the value of the ace to be 1 
+		or 11, the value of the ace is set to 1 by default.
+		
+		The instance variable 'playedCards' is a dictionary structure with 
+		the cards that were already picked from the deck
+		
+		"""
 		self.deck = {"ace": [1,1,1,1],
 				"two": [2,2,2,2],
 				"three": [3,3,3,3],
@@ -26,25 +31,25 @@ class Deck:
 				"jack": [10,10,10,10],
 				"queen": [10,10,10,10],
 				"king": [10,10,10,10]}
-
-		'''
-		Dictionary structure with the cards that were already played in the game
-		'''
+		
 		self.playedCards = {}
 
 
 		
 	def emptyPlayedCards(self):
-		'''
+		"""
 		Clears the playedCards structure
-		'''
+		"""
 		self.playedCards = {}
 
 
 	def pickCard(self):
-		'''
-		Picks a card at random from the cards that are available.
-		'''
+		"""
+		Picks a card at random from the cards that are available in the deck
+
+		:rtype: int
+		"""
+
 		card = random.choice(self.deck.keys())
 		value = self.deck[card][0]
 
@@ -64,10 +69,13 @@ class Deck:
 
 
 	def numbCardsLeft(self):
-		'''
-		Returns the total number of cards that are left in the deck for the player/dealer
+		"""
+		Check for the total number of cards that are left in the deck for the player/dealer
 		to pick
-		'''
+
+		:rtype: int
+		"""
+
 		total = 0
 
 		for key in self.deck.keys():
@@ -78,9 +86,10 @@ class Deck:
 
 
 	def __addToPlayedCards(self,card,value):
-		'''
-		Adds the last card that was picked, to the playedCards structure
-		'''
+		"""
+		Adds the last card that was picked to the playedCards dictionary structure
+
+		"""
 		if card not in self.playedCards.keys():
 			items = []
 			items.append(value)

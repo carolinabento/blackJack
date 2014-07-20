@@ -2,6 +2,10 @@ import random
 from deck import Deck
 
 class Player:
+	"""
+	The Player class represents a BlackJack player
+	"""
+
 
 	def __init__(self):
 		#keep the player's deck
@@ -13,18 +17,33 @@ class Player:
 
 	
 	def updateDeck(self,cardList):
-		'''
+		"""
 		Update the player's deck
-		'''
+
+		:param cardList: List of cards to add to the dealer's deck
+		:type cardList: list
+		"""
 
 		for card in cardList:
 			self.deck.append(card)
 
 
 	def updateChips(self,winner,bet):
-		'''
+		"""
 		Update the player's chips count
-		'''
+
+		:param winner: the code corresponding to the possible ways a player can update 
+		his chips
+					1 - Player won. Increases number of chips with double the bet.
+					2 - Player won getting a BlackJack on the first hand of the game.
+						Increases number of chips with 1 and 1/2 the bet.
+					3 - Player lost. Decreases number of chips
+		:type winner: int
+
+		:param bet: the bet the player made at the beginning of the game
+		:type bet: int
+
+		"""
 
 		if winner == 1:
 			self.chips += bet*2
@@ -34,12 +53,18 @@ class Player:
 			self.chips -= bet
 
 
-	def makeMove(self,Deck):
-		'''
+	def makeMove(self,deck):
+		"""
 		The player's possible moves
-		The player choose which value the ace (card = 1) will be, given his current hand
-		'''
-		card = Deck.pickCard();
+		The player chooses which value the ace (card = 1) will be, 
+		given his current hand
+		
+		:param deck: Deck class
+		:type deck: :class:'blackjack.deck' class instance
+
+		"""
+
+		card = deck.pickCard();
 
 		print("\tThe card picked: " + str(card))
 

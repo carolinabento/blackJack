@@ -17,51 +17,51 @@ def textBlackJack():
 	player = Player()
 	blackJack = BlackJack(player)
 
-	while player.chips > 0.0:
+	while blackJack.player.chips > 0.0:
 
 		if blackJack.dealer.numberCards == 0:
-			blackJack.bet = blackJack.placeBet(player,1,blackJack.moves)
+			blackJack.bet = blackJack.placeBet(1)
 			
 			if blackJack.bet == 0:
-				print("Player: You left the game with " + str(player.chips) + " chips.")			
+				print("Player: You left the game with " + str(blackJack.player.chips) + " chips.")			
 				return
 			else:
-				blackJack.dealer.dealCards(player,blackJack.deck)
+				blackJack.dealer.dealCards(blackJack.player,blackJack.deck)
 				blackJack.moves += 1
 
-		blackJack.action = raw_input("Player: Your deck is " + str(player.deck) + ". Your current hand is " +  str(player.hand) + ". What is your move?\n")
+		blackJack.action = raw_input("Player: Your deck is " + str(blackJack.player.deck) + ". Your current hand is " +  str(blackJack.player.hand) + ". What is your move?\n")
 
 		if blackJack.action == "h" or blackJack.action.lower() == "hit":
 			blackJack.moves += 1
 
 			player.hand = player.makeMove(blackJack.deck)
 
-			blackJack.checkWinner(blackJack.bet,blackJack.action,blackJack.deck,player,blackJack.dealer)
+			blackJack.checkWinner()
 			
 		elif blackJack.action == "s" or blackJack.action.lower() == "stand":
 
 			blackJack.dealer.makeMove(blackJack.deck)
 
-			blackJack.checkWinner(blackJack.bet,blackJack.action,blackJack.deck,player,blackJack.dealer)
+			blackJack.checkWinner()
 			
 		elif blackJack.action == "d" or blackJack.action.lower() == "double down" or blackJack.action.lower() == "doubledown":
 			if  blackJack.moves == 1:
 				firstBet = blackJack.bet
 
-				blackJack.bet = blackJack.placeBet(player,3,blackJack.moves)
+				blackJack.bet = blackJack.placeBet(3)
 
 				if blackJack.bet == firstBet*2:
 
 					player.hand = player.makeMove(blackJack.deck)
 					blackJack.action = "s"
 
-					blackJack.checkWinner(blackJack.bet,blackJack.action,blackJack.deck,player,blackJack.dealer)		
+					blackJack.checkWinner()
 			else:
 				print("Player: You can only double down in your first move!")	
 
 
 		if blackJack.action.lower() in blackJack.exitMoves:
-			print("Player: You left the game with " + str(player.chips) + " chips.")
+			print("Player: You left the game with " + str(blackJack.player.chips) + " chips.")
 			return
 		elif blackJack.action.lower() in blackJack.possibleMoves:
 			continue
@@ -80,15 +80,15 @@ def greedyBlackJack():
 	greedyPlayer = GreedyPlayer()
 	blackJack = BlackJack(greedyPlayer)
 
-	print("Player: You have " + str(greedyPlayer.chips) + " chips.")
+	print("Player: You have " + str(blackJack.player.chips) + " chips.")
 
-	while greedyPlayer.chips > 0.0:
+	while blackJack.player.chips > 0.0:
 		blackJack.moves += 1
 
 		if blackJack.dealer.numberCards == 0:
-			blackJack.bet = blackJack.placeBet(greedyPlayer,2,blackJack.moves)
-			blackJack.dealer.dealCards(greedyPlayer,blackJack.deck)
-			print("Player: Your deck is " + str(greedyPlayer.deck) + ". Your current hand is " +  str(greedyPlayer.hand) + ".")
+			blackJack.bet = blackJack.placeBet(2)
+			blackJack.dealer.dealCards(blackJack.player,blackJack.deck)
+			print("Player: Your deck is " + str(blackJack.player.deck) + ". Your current hand is " +  str(blackJack.player.hand) + ".")
 			
 
 		print("Player: Your bet was " + str(blackJack.bet) + " chips.")
@@ -107,13 +107,13 @@ def greedyBlackJack():
 			
 			blackJack.action = "s"
 
-		blackJack.winner(blackJack.bet,blackJack.action,blackJack.deck,greedyPlayer,blackJack.dealer)
+		blackJack.winner()
 		
-		blackJack = BlackJack(greedyPlayer)
-		print("\n\nPlayer: You have " + str(greedyPlayer.chips) + " chips.")
+		blackJack = BlackJack(blackJack.player)
+		print("\n\nPlayer: You have " + str(blackJack.player.chips) + " chips.")
 
 
-	if greedyPlayer.chips == 0.0:
+	if blackJack.player.chips == 0.0:
 		print("Game Over!")
 
 
@@ -127,15 +127,15 @@ def cautiousBlackJack():
 	cautiousPlayer = CautiousPlayer()
 	blackJack = BlackJack(cautiousPlayer)
 
-	print("Player: You have " + str(cautiousPlayer.chips) + " chips.")
+	print("Player: You have " + str(blackJack.player.chips) + " chips.")
 
-	while cautiousPlayer.chips > 0.0:
+	while blackJack.player.chips > 0.0:
 		blackJack.moves += 1
 
 		if blackJack.dealer.numberCards == 0:
-			blackJack.bet = blackJack.placeBet(cautiousPlayer,2,blackJack.moves)
-			blackJack.dealer.dealCards(cautiousPlayer,blackJack.deck)
-			print("Player: Your deck is " + str(cautiousPlayer.deck) + ". Your current hand is " +  str(cautiousPlayer.hand) + ".")
+			blackJack.bet = blackJack.placeBet(2)
+			blackJack.dealer.dealCards(blackJack.player,blackJack.deck)
+			print("Player: Your deck is " + str(blackJack.player.deck) + ". Your current hand is " +  str(blackJack.player.hand) + ".")
 			
 
 		print("Player: Your bet was " + str(blackJack.bet) + " chips.")
@@ -154,13 +154,13 @@ def cautiousBlackJack():
 			
 			blackJack.action = "s"
 
-		result = blackJack.winner(blackJack.bet,blackJack.action,blackJack.deck,cautiousPlayer,blackJack.dealer)
+		result = blackJack.winner()
 
-		blackJack = BlackJack(cautiousPlayer)
-		print("\n\nPlayer: You have " + str(cautiousPlayer.chips) + " chips.")
+		blackJack = BlackJack(blackJack.player)
+		print("\n\nPlayer: You have " + str(blackJack.player.chips) + " chips.")
 
 
-	if cautiousPlayer.chips == 0.0:
+	if blackJack.player.chips == 0.0:
 		print("Game Over!")
 
 
