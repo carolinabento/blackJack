@@ -16,7 +16,7 @@ Table Of Contents
 
 To play this text-based BlackJack download the project's source code, open your terminal in project root directory and type:
 
-<code>./blackJack/playBlackJach.py</code>
+<code>./bin/playBlackJach.sh</code>
 
 
 ### <a name="docs"></a>Documentation
@@ -30,9 +30,9 @@ This BlackJack game contains a limited set of [moves/actions]:
 
 You can play a **input-based version**, where you type the command correspoding to each possible move, or your can **let a bot be the player**.
 
-This bot can be two different players:
+This bot can have two different strategies:
 * **Greedy Player** - always hits until his hand is greater or equal to 15,
-* **Cautious Player** - only hits if the probability of picking a card that will not make him bust (and lose the game) is greater or equal to 0.6, i.e., he has 60% of chance of not busting
+* **Cautious Player** - only hits if he has 60% chance of not busting
 
 Here is a screenshot of the initial screen, where you can choose your game mode:
 
